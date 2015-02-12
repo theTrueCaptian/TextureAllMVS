@@ -1,0 +1,41 @@
+<div id="pdfContainer" ng-controller="pdfOpenController" class="text-center container" >
+	<div class="wrapper" >
+		<div ng-show="showPDF" class="ng-hide">
+			<nav ng-class="{'pdf-controls fixed': scroll > 100, 'pdf-controls': scroll <= 100}" class="clearfix">
+
+				<!--p This is where we show the pdf: {{pdftext}}-->
+				<div class="row">
+					<!--<div class="btn-group">
+						<button class="btn" ng-click="pdfURL='test.pdf'">Load test.pdf</button>
+						<button class="btn" ng-click="pdfURL='test2.pdf'">Load test2.pdf</button>
+					</div>-->
+					<div class="btn-group">
+						<button class="btn" ng-click="gotoPage(1)">|&lt;</button>
+						<button class="btn" ng-click="prevPage()">&lt;</button>
+						<button class="btn" ng-click="nextPage()">&gt;</button>
+						<button class="btn" ng-click="gotoPage(totalPages)">&gt;|</button>
+						<!--<button ng-click="zoomIn()">+</span></button>
+						<button ng-click="zoomOut()">-</span></button>
+						<span>Page: </span><input type="text" min=1 ng-model="pageNum"><span> / {{pageCount}}</span>-->
+					</div>
+				</div>
+				<div class="row">
+					<span class="label" ng-show="totalPages">{{currentPage}}/{{totalPages}}</span>
+				</div>
+				<div class="row">
+					<style> .scrollable{ height:300px; overflow:auto; }</style>
+					<div class="scrollable">
+					<pdfviewer src="{{pdfURL}}" on-page-load='pageLoaded(page,total)' id="viewer" load-progress='loadProgress(loaded, total, state)'>Loading...</pdfviewer>
+					<!--<pdf-viewer
+							delegate-handle="my-pdf-container"
+							url="pdfUrl"
+							scale="1"
+							show-toolbar="true"></pdf-viewer>-->
+
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+
+</div>

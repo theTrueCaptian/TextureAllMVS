@@ -1,0 +1,15 @@
+{
+
+	"name": "",
+	"version": "0.0.0",
+	"description":"MV* structure for TextureAll. Provides a cleaner way to adding functionality without affecting frontend, or viceversa.",
+	"main":"server.js",
+	"author":"Maeda",
+	"dependencies":{
+		"express":"~4.7.2",
+		"body-parser":"~1.5.2",
+		"morgan":"~1.2.2",
+		"method-override":"~2.1.2",
+	  	"pg": "2.x"
+	}
+}
