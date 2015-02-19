@@ -25,8 +25,8 @@ app.use(methodOverride());
 
 //routes =====================================================
 //load the routes
-require('./app/routes')(app);
 require('./app/pdf')(app, pgconn);
+require('./app/routes')(app);
 
 //TODO add in routes for NER/Graph results
 

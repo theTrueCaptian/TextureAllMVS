@@ -10,6 +10,7 @@ angular.module('ngPDFViewer', []).
 directive('pdfviewer', [ '$parse', function($parse) {
 	var canvas = null;
 	var instance_id = null;
+	var canvas_id = null;
 
 	return {
 		restrict: "E",
@@ -57,14 +58,26 @@ directive('pdfviewer', [ '$parse', function($parse) {
 					canvas.height = viewport.height;
 					canvas.width = viewport.width;
 
+
 					page.render({ canvasContext: ctx, viewport: viewport }).promise.then(
-						function() { 
+
+						function() {
+
+							/*pdfContainer.appendChild(pdfPage);
+
+							currPage++;
+							if ( thePDF !== null && currPage <= numPages ){thePDF.getPage( currPage ).then( handlePages );}
+*/
 							if (callback) {
 								callback(true);
 							}
 							$scope.$apply(function() {
+								//ctx.rect(20,20,150,100);
+								//ctx.stroke();
 								$scope.onPageLoad({ page: $scope.pageNum, total: $scope.pdfDoc.numPages });
+
 							});
+
 						}, 
 						function() {
 							if (callback) {
@@ -111,6 +124,7 @@ directive('pdfviewer', [ '$parse', function($parse) {
 		} ],
 		link: function(scope, iElement, iAttr) {
 			canvas = iElement.find('canvas')[0];
+			console.log(iElement);
 			instance_id = iAttr.id;
 
 			iAttr.$observe('src', function(v) {
@@ -127,6 +141,7 @@ service("PDFViewerService", [ '$rootScope', function($rootScope) {
 
 	var svc = { };
 	svc.nextPage = function() {
+		console.log("getting next page of "+svc.Instance.instance_id)
 		$rootScope.$broadcast('pdfviewer.nextPage');
 	};
 
@@ -134,8 +149,10 @@ service("PDFViewerService", [ '$rootScope', function($rootScope) {
 		$rootScope.$broadcast('pdfviewer.prevPage');
 	};
 
-	svc.Instance = function(id) {
+	svc.Instance = function(id, canvas_id) {
+		console.log("pdf-viewer's id:"+id);
 		var instance_id = id;
+		var canvas_id = canvas_id;
 
 		return {
 			prevPage: function() {
@@ -146,7 +163,8 @@ service("PDFViewerService", [ '$rootScope', function($rootScope) {
 			},
 			gotoPage: function(page) {
 				$rootScope.$broadcast('pdfviewer.gotoPage', instance_id, page);
-			}
+			},
+			instance_id:instance_id
 		};
 	};
 

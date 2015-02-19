@@ -9,15 +9,16 @@ module.exports = function(app, database){
     var pdfModel = require('./models/pdf')(database);
 
     //List all pdfs
-    app.get('/pdf/', function(req,res){
+    /*app.get('/pdf/', function(req,res){
         //pdfModel.getDocuments();
 
         //res.sendfile('./public/index.html');
-    });
+    });*/
 
     //Get a specific PDF
-    app.get('/pdf/:pdfFile', function(req, res){
+    app.get('/convertpdf/:pdfFile', function(req, res){
         var filename = req.query.pdfFile;
+        console.log("Request for "+filename);
         /*var callback = function (err, readResult) {
             console.log('err', err, 'pg readResult', readResult);
             fs.writeFile('/tmp/'+filename, readResult.rows[0].file);
@@ -26,17 +27,21 @@ module.exports = function(app, database){
         //Call the database to get the pdf
         pdfModel.getDocument()*/
 
-        getDocument(filename, function(resultfilepath){
+        getDocument(filename, function (resultfilepath) {
             //After conversion send the newly converted filepath to the client
-            res.send({'resultfilepath':resultfilepath})
+            //res.send({'resultfilepath':resultfilepath});
+            //Send back an image
+            console.log(resultfilepath)
 
-        })
+
+        });
+
      });
 }
 
 //pdftohtml module used to convert pdf into html
 function getDocument(filename, callback){
-    var newfilepath = '../public/pdf/'+filename+'.html';
+    /*var newfilepath = '../public/pdf/'+filename+'.html';
     var pdftohtml = require('pdftohtmljs'),
         converter = new pdftohtml('../public/pdf/'+filename, '../public/pdf/'+filename+'.html');
 
@@ -58,5 +63,14 @@ function getDocument(filename, callback){
         console.log ((ret.current*100.0)/ret.total + " %");
     });
 
-    converter.convert();
+    converter.convert();*/
+    //Or with this ghostscript
+    var gs = require('gs');
+    gs()
+        .batch()
+        .output()
+        .input(input)
+        .exec(function(err, data) {
+            console.log(data.toString());
+        });
 }
