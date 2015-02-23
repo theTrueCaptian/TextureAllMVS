@@ -3,8 +3,8 @@ var pgconnectionString =process.env.DATABASE_URL || "postgres://postgres:sesames
 
 //Database
 var pgdb = require('./app/pgdatabase').database;
-var pgconn = new pgdb(pgconnectionString);
-pgconn.databaseConnect();
+var pgconn = null//new pgdb(pgconnectionString);
+//pgconn.databaseConnect();
 
 //set up
 var express = require('express');
@@ -25,13 +25,13 @@ app.use(methodOverride());
 
 //routes =====================================================
 //load the routes
-require('./app/pdf')(app, pgconn);
+require('./app/pdfroutes')(app, pgconn);
 require('./app/routes')(app);
 
 //TODO add in routes for NER/Graph results
 
 //listening (start app with node server.js)	========================
-var port = 3000;
+var port = 8000;
 app.listen(port);
 console.log("App listening on port "+port);
 

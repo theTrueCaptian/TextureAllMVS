@@ -24,7 +24,7 @@ app.controller('pdfController', function($scope, $http){
 
     $scope.loadpdf = function(filename){
         $scope.filename = filename;
-        var req = '/convertpdf/'+filename;
+        var req = {'filename':'/convertpdf/'+filename};
         console.log('Requesting server for pdf conversion:'+req);
 
         $http.get(req).success(function(newfilenamepath){

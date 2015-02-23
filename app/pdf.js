@@ -1,76 +1,55 @@
 /**
- * Created by Maeda on 2/9/2015.
- *
- * Provide routes to for the pdf documents.
+ * Created by mh4047 on 2/22/15.
  */
 
-module.exports = function(app, database){
-    //api for document uploads -----------------------------
-    var pdfModel = require('./models/pdf')(database);
+var path_to_pdf_dir = 'public/pdf/';
+var path_to_pdf_img_dir = 'public/pdf/img/';
 
-    //List all pdfs
-    /*app.get('/pdf/', function(req,res){
-        //pdfModel.getDocuments();
-
-        //res.sendfile('./public/index.html');
-    });*/
-
-    //Get a specific PDF
-    app.get('/convertpdf/:pdfFile', function(req, res){
-        var filename = req.query.pdfFile;
-        console.log("Request for "+filename);
-        /*var callback = function (err, readResult) {
-            console.log('err', err, 'pg readResult', readResult);
-            fs.writeFile('/tmp/'+filename, readResult.rows[0].file);
-            res.json(200, {success: true});
-        }
-        //Call the database to get the pdf
-        pdfModel.getDocument()*/
-
-        getDocument(filename, function (resultfilepath) {
-            //After conversion send the newly converted filepath to the client
-            //res.send({'resultfilepath':resultfilepath});
-            //Send back an image
-            console.log(resultfilepath)
+var im = require('imagemagick');
 
 
-        });
-
-     });
-}
 
 //pdftohtml module used to convert pdf into html
-function getDocument(filename, callback){
-    /*var newfilepath = '../public/pdf/'+filename+'.html';
-    var pdftohtml = require('pdftohtmljs'),
-        converter = new pdftohtml('../public/pdf/'+filename, '../public/pdf/'+filename+'.html');
+//@filename is the pdf file to convert e.g. maeda.pdf
+//@callback's parameters passed intp the callback function is the resulting path files of the images e.g. ['image1.jpg',...]
+exports.pdf2html = function (filename, callback){
+    /* preferred options for best quality see http://stackoverflow.com/questions/6605006/convert-pdf-to-image-with-high-resolution
+     convert
+     -verbose
+     -density
+     -trim
+     test.pdf
+     -qualitiy 100
+     -sharpen 0x1.0
+     ajfds.jpg
 
-    converter.preset('default');
+     */
+    im.convert(['-verbose',
+                '-density',
+                '-trim',
+                path_to_pdf_dir+filename,
+                '-qualitiy',
+                '100',
+                '-sharpen',
+                '0x1.0',
+                path_to_pdf_img_dir+filename+'.jpg'],
+        function(err, stdout){
+            if (err){
+                console.log(err);
+                callback(err);
+            }else {
+                console.log('stdout:', stdout);
+                callback(path_to_pdf_img_dir + filename + '.jpg');
+            }
+        }
+    );
+}
 
-    converter.success(function() {
-        console.log("convertion done");
-        callback(newfilepath);
+//The conversion from pdf's image into meta-data
+//@filename of the image to process into meta-data via image processing
+exports.image2meta = function(filename){
+    //Begin processing image
 
-    });
-
-    converter.error(function(error) {
-        console.log("conversion error: " + error);
-        callback(error);
-
-    });
-
-    converter.progress(function(ret) {
-        console.log ((ret.current*100.0)/ret.total + " %");
-    });
-
-    converter.convert();*/
-    //Or with this ghostscript
-    var gs = require('gs');
-    gs()
-        .batch()
-        .output()
-        .input(input)
-        .exec(function(err, data) {
-            console.log(data.toString());
-        });
+    //Identify areas of text and replace each letter with a black box.
+    //Generally, bigger areas of text refer to a "Title" and lots of clumped up areas of text refer to a "title"
 }
