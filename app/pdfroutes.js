@@ -20,7 +20,7 @@ module.exports = function(app, database){
 
     //Get a specific PDF
     app.get('/convertpdf/:pdfFile', function(req, res){
-        var filename = req.query.filename;
+        var filename = req.params.pdfFile;
         console.log("Request for conversion on "+filename);
 
         pdf.pdf2html(filename, function (resultfilepath) {
