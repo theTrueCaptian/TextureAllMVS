@@ -1,14 +1,16 @@
 /**
  * Created by mh4047 on 2/22/15.
+ * The pdf module that deals with pdf file processing e.g. pdf to image or pdf to meta or pdf to ocr
  */
 
 var path_to_pdf_dir = 'public/pdf/';
 var path_to_pdf_img_dir = 'public/pdf/img/';
-var img_ext = 'jpg';
+var client_path_img_dir = 'pdf/img/'
+var img_ext = 'png';
 var im = require('imagemagick');
 var fs = require('fs');
 
-
+//Feb 26, Problem: imagemagick doesn't render the text on certian pdfs.
 
 //pdftohtml module used to convert pdf into html
 //@filename is the pdf file to convert e.g. maeda.pdf
@@ -16,7 +18,7 @@ var fs = require('fs');
 exports.pdf2html = function (filename, callback){
     /* preferred options for best quality see http://stackoverflow.com/questions/6605006/convert-pdf-to-image-with-high-resolution
      */
-    im.convert(['-verbose',
+    im.convert(/*['-verbose',
                 '-density',
                 '150',
                 '-trim',
@@ -25,6 +27,17 @@ exports.pdf2html = function (filename, callback){
                 '100',
                 '-sharpen',
                 '0x1.0',
+                path_to_pdf_img_dir+filename+'.'+img_ext]*/
+            ['-verbose',        //Solving the issue of dark images converted     http://stackoverflow.com/questions/10934456/imagemagick-pdf-to-jpgs-sometimes-results-in-black-background
+                '-density',
+                '150',
+                '-colorspace',
+                'sRGB',
+                path_to_pdf_dir+filename,
+                '-resize',
+                '50%',
+                '-quality',
+                '95',
                 path_to_pdf_img_dir+filename+'.'+img_ext],
         function(err, stdout){
             if (err){
@@ -35,21 +48,21 @@ exports.pdf2html = function (filename, callback){
 
                 //Get all filenames from the pdf's image results:
                 var allFiles = getAllFileNamesFromDir(path_to_pdf_img_dir);
-                console.log(allFiles);
 
                 //Filter out for the file names that have the same prefix names followed by a dash and number
+                //or sometimes it is just followed by  the extension (in the case of .png)
                 //and add them to pdfImgFiles[]
                 var pdfImgFiles = [];
                 allFiles.forEach(function(elem){
                     var regex = new RegExp("\\b("+filename+")\\b-\\d+\\."+img_ext);
-                    console.log(regex)
-                    console.log(elem)
-                    console.log(regex.test(elem))
+                    var regex2 = new RegExp("\\b("+filename+")\\b\\."+img_ext);
+
                     //Check for a match
-                    if(regex.test(elem)){
-                       pdfImgFiles.push(path_to_pdf_img_dir +elem);
+                    if(regex.test(elem) || regex2.test(elem)){
+                       pdfImgFiles.push(client_path_img_dir +elem);
                     }
                 });
+
 
                 callback(pdfImgFiles);
             }
@@ -73,3 +86,5 @@ function getAllFileNamesFromDir(dir){
     return files;
 
 }
+
+//OCR on the pdfs
