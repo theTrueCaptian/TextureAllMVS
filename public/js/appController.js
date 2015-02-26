@@ -134,33 +134,43 @@ app.controller('pdfOpenController', [ '$scope', '$http', function($scope, $http)
 }]);
 
 function loadAllImages(canvas_name, arrImgSrc, callback){
-    var loadedArr=[]; //Array of Image objects that are loaded
-    for(var i=0; i<arrImgSrc.length; i++) {//arrImgSrc.forEach(function(src){
+    var loadedArr=[]; //Array of promise objects
+    var imgArr = [];    //Array of image objects that are loaded
+    for(var i=0; i<arrImgSrc.length; i++) {
         var src = arrImgSrc[i];
-        //loadAnImage(src).done(function(imgObj){
-        //    loadedArr.push(imgObj);
-        //});
-        loadedArr.push(loadAnImage(canvas_name, src));
-        //var page = new Image();
-        //page.onload = //callback;
-        //page.src = src;
-    }//});
-    //return loadedArr;
+        var sprite = new Image();
+
+        imgArr.push(sprite);
+        loadedArr.push(loadAnImage(canvas_name, sprite, src));
+    }
+    //When all the promises are met, draw the images onto canvas
     $.when.apply(null, loadedArr).done(function() {
+        console.log("A resolve has been made!")
+        var canvas = document.getElementById(canvas_name);
+        var context = canvas.getContext("2d");
+
+        //@currentHeight keeps track of the y coordinate of where the next picture should be displayed e.g. currheight = currheight + prev image height
+        var currentHeight = 10;
+
+        for(var i=0; i<imgArr.length; i++){
+            context.drawImage(imgArr[i], 0, currentHeight);
+            //Set the y coordinate for the next image
+            currentHeight = currentHeight + imgArr[i].height +10;
+        }
+
+
         // callback when everything was loaded
         callback(loadedArr);
     });
 }
 
-function loadAnImage(canvas_name, src){
+function loadAnImage(canvas_name, sprite, src){
     //Defer it
     var deferred = $.Deferred();
-    var sprite = new Image();
+
     sprite.onload = function() {
         deferred.resolve();
-        var canvas = document.getElementById(canvas_name);
-        var context = canvas.getContext("2d");
-        context.drawImage(sprite, 0, 0);
+
     };
     sprite.src = src;
     return deferred.promise();
