@@ -41,6 +41,21 @@ app.controller('pdfController', function($scope, $http){
     $scope.showAll = function() {
         $scope.limit = $scope.pdf_list.length;
     };
+    // watch for creation of an element which satisfies the selector ".pdfTableRow"
+    $(document).arrive(".pdfTableRow", function() {
+        setTimeout(function () {
+            var constantmargins = 26;
+            $scope.canvas_width = $(".pdfTableRow").width() -constantmargins;
+            console.log("width of canvas_width:"+$scope.canvas_width);
+            console.log("width of pdf table row:"+$(".pdfTableRow").width());
+            // unbind all arrive events on document element
+            $(document).unbindArrive();
+        }, 100);
+
+    });
+
+
+
 
 });
 
@@ -48,11 +63,16 @@ app.controller('pdfController', function($scope, $http){
 //Load in data into the pdf lists
 //Controls pdfContainer.html
 app.controller('pdfOpenController', [ '$scope', '$http', function($scope, $http) {
+
+
     console.log('Open pdf: '+ $scope.filename);
 
     $scope.this_filename = $scope.filename;
     //pdf-viewer's id
     $scope.canvas_name = 'canvas'+$scope.$index;//'\\\''+$scope.$index+'\\\'';//"viewer"+$scope.$index;
+
+    $('.scrollable').width($scope.canvas_width);
+
     $scope.pdfURL = "/pdf/"+$scope.this_filename;
 
     //Canvas stuff

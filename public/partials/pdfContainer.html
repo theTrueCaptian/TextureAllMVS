@@ -2,29 +2,12 @@
 <!-- Infomration on how the scope of controllers work:
 	http://stackoverflow.com/questions/16137053/angularjs-how-to-restrict-scope-on-ngclick-in-multiple-instances
 	Thus we instantiate a controller, pdfOpenController, for each pdf -->
+
 <div id="pdfContainer"   class="text-center container" >
 	<div class="wrapper" ng-controller="pdfOpenController" >
 		<div ng-show="showPDF" class="ng-hide"  >
 			<!--p This is where we show the pdf: -->
-			<!--<div class="row">
 
-				<div class="btn-group">
-					<button class="btn" ng-click="gotoPage( 1)">
-						<span class="glyphicon glyphicon-step-backward" aria-hidden="true" ></span>
-					</button>
-					<button class="btn" ng-click="prevPage()">
-						<span class="glyphicon glyphicon-arrow-left" aria-hidden="true" ></span>
-					</button>
-					<button class="btn" ng-click="nextPage()">
-						<span class="glyphicon glyphicon-arrow-right" aria-hidden="true" ></span>
-					</button>
-					<button class="btn" ng-click="gotoPage(totalPages)">
-						<span class="glyphicon glyphicon-step-forward" aria-hidden="true" ></span>
-					</button>
-
-				</div>
-
-			</div>-->
 			<div class="row"  >
 
 				<div class="progress progress-striped active" ng-show="showprogress" >
@@ -34,8 +17,9 @@
 
 			</div>
 			<div class="row" id="par">
-				<style> .scrollable{ height:300px; overflow:scroll; width:600px; }</style>
-				<script></script>
+				<style> .scrollable{ height:300px; overflow:scroll; }</style>
+				<!-- Dynamically set a width-->
+				<script> </script>
 				<div class="scrollable">
 					<canvas id="{{canvas_name}}"  ></canvas>
 				</div>

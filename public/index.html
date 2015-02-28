@@ -39,7 +39,8 @@
 	<!--<script src='js/pdfroutes.js'></script>
 	<script src='js/pdf.compat.js'></script>
 	<script src='js/pdf.worker.js'></script>-->
-
+	<!-- Plugin to wait for an element to load-->
+	<script src="js/arrive.min.js"></script>
 
 </head>
 <body ><div class="container" style="">
@@ -75,13 +76,13 @@
 						</td>
 					</tr></table>
 				</div>
-				<div class="panel-body" style='width:inherit' ng-controller="pdfController" >
+				<div id="pdf_list_div" class="panel-body" style='width:inherit' ng-controller="pdfController" >
 
 					<!-- PDF list/partial when open  -->
 					<table class='pdfTables' style='width:100%'  >
 						<tr ng-repeat="pdf_file in pdf_list | filter:searchText | limitTo:limit " style='width:inherit'>
 							<td >
-								<div>
+								<div class="pdfTableRow">
 									<a  ng-click="currentTpl='partials/pdfContainer.html'; showPDF=!showPDF; loadpdf( pdf_file.filename);" type="button" class="btn btn-default" style='width:100%' >
 										{{pdf_file.filename}}
 									</a>
