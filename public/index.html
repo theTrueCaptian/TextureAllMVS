@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html ng-app="pdfApp">
+<html ng-app="pdfApp" >
 <head>
 	<title> Texture app </title>
 	<!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
@@ -75,11 +75,11 @@
 						</td>
 					</tr></table>
 				</div>
-				<div class="panel-body" style='width:inherit'>
+				<div class="panel-body" style='width:inherit' ng-controller="pdfController" >
 
-					<!-- PDF list/partial when open-->
-					<table class='pdfTables' style='width:100%' ng-controller="pdfController" >
-						<tr ng-repeat="pdf_file in pdf_list | filter:searchText" style='width:inherit'>
+					<!-- PDF list/partial when open  -->
+					<table class='pdfTables' style='width:100%'  >
+						<tr ng-repeat="pdf_file in pdf_list | filter:searchText | limitTo:limit " style='width:inherit'>
 							<td >
 								<div>
 									<a  ng-click="currentTpl='partials/pdfContainer.html'; showPDF=!showPDF; loadpdf( pdf_file.filename);" type="button" class="btn btn-default" style='width:100%' >
@@ -90,7 +90,12 @@
 
 							</td>
 						</tr>
+
 					</table>
+
+					<a href ng-click="incrementLimit()" type="button" ng-show="limit!=pdf_list.length">More</a>
+					<a href ng-click="showAll()" type="button" ng-show="limit!=pdf_list.length">All</a>
+					<a href ng-click="decrementLimit()" type="button" ng-show="limit>limitStep">Less</a>
 				</div>
 			</div>
 

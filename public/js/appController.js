@@ -13,6 +13,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 //load in data into the pdf lists
 app.controller('pdfController', function($scope, $http){
     $scope.pdf_list = [];
+
     $http.get('/index/filenames').success(function(filename) {  //List of strings
         //$scope.pdf_list = filename
         //pdf_list is a list of objects containng information on that filename
@@ -29,6 +30,17 @@ app.controller('pdfController', function($scope, $http){
 
     }
 
+    $scope.limitStep = 5;
+    $scope.limit = $scope.limitStep;
+    $scope.incrementLimit = function() {
+        $scope.limit += $scope.limitStep;
+    };
+    $scope.decrementLimit = function() {
+        $scope.limit = $scope.limitStep;
+    };
+    $scope.showAll = function() {
+        $scope.limit = $scope.pdf_list.length;
+    };
 
 });
 
@@ -118,19 +130,6 @@ app.controller('pdfOpenController', [ '$scope', '$http', function($scope, $http)
     //Display the pdf
     $scope.displaypdf();
 
-
-    /*$scope.loadProgress = function(loaded, total, state) {
-        //console.log('loaded =', loaded, 'total =', total, 'state =', state);
-        //Calculate percentage of loaded
-        $scope.percentage = parseInt(loaded/total * 100);
-        if($scope.percentage>=90){
-            $scope.$apply(function(){
-                $scope.showprogress = false;
-            });
-        }
-    };
-*/
-
 }]);
 
 function loadAllImages(canvas_name, arrImgSrc, callback){
@@ -149,6 +148,18 @@ function loadAllImages(canvas_name, arrImgSrc, callback){
         var canvas = document.getElementById(canvas_name);
         var context = canvas.getContext("2d");
 
+        var totHeight = 0;
+        var maxWidth = 0;
+        for(var i=0; i<imgArr.length; i++){
+            totHeight = totHeight + imgArr[i].height;
+            if(imgArr[i].width > maxWidth){
+                maxWidth = imgArr[i].width;
+            }
+        }
+
+        context.canvas.height = totHeight;
+        context.canvas.width = maxWidth;
+
         //@currentHeight keeps track of the y coordinate of where the next picture should be displayed e.g. currheight = currheight + prev image height
         var currentHeight = 10;
 
@@ -157,7 +168,6 @@ function loadAllImages(canvas_name, arrImgSrc, callback){
             //Set the y coordinate for the next image
             currentHeight = currentHeight + imgArr[i].height +10;
         }
-
 
         // callback when everything was loaded
         callback(loadedArr);
