@@ -3,9 +3,7 @@
 <html ng-app="pdfApp" >
 <head>
 	<title> Texture app </title>
-	<!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"><!-- load bootstrap -->
-	<!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/2.0.1/ng-tags-input.min.css" />-->
 	<link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css" />
 	<link rel="stylesheet" type="text/css" href="css/productionContainer.css" />
 	<link rel="styleSheet" href="css/ui-grid-unstable.css"/>
@@ -13,34 +11,34 @@
 	<!-- SPELLS -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.0.7/jquery.browser.min.js"></script><!-- Needed to use $.browser-->
-	<script src='js/jcanvas.min.js'></script> <!--Jcanvas for our select tool in the canvas via jquery -->
-	<script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>	<!-- the jScrollPane script for pretty scrolls -->
-	<script type="text/javascript" src="js/jquery.mousewheel.js"></script>	<!-- the jScrollPane script for pretty scrolls -->
+	<script src='js/library/jcanvas.min.js'></script> <!--Jcanvas for our select tool in the canvas via jquery -->
+	<script type="text/javascript" src="js/library/jquery.jscrollpane.min.js"></script>	<!-- the jScrollPane script for pretty scrolls -->
+	<script type="text/javascript" src="js/library/jquery.mousewheel.js"></script>	<!-- the jScrollPane script for pretty scrolls -->
 	<!--instantiate after some browser sniffing to rule out webkit browsers-->
 	<script type="text/javascript">
 		$(document).ready(function () {if (!$.browser.webkit) {	$('.container').jScrollPane();}	});
 	</script>
 	<!-- Other important js -->
-	<script src="js/lodash.js"></script>
+	<script src="js/library/lodash.js"></script>
 	<script src="js/utils.js"></script>
-	<!--<script src="js/pdfobject.js"></script>-->
-
-
-	<script src='js/angular.js'></script>
-	<!--Angular dependencies-->
-	<script src='js/angular-route.js'></script>
-	<!--<script src='js/ng-pdfviewer.js'></script>-->
-	<script src="/js/ui-grid-unstable.js"></script>
-	<script src='js/ui-bootstrap-tpls-0.12.0.min.js'></script>
-	<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/2.0.1/ng-tags-input.min.js"></script>-->
-
-	<!--Controller-->
-	<script src='js/appController.js'></script>
-	<!--<script src='js/pdfroutes.js'></script>
-	<script src='js/pdf.compat.js'></script>
-	<script src='js/pdf.worker.js'></script>-->
 	<!-- Plugin to wait for an element to load-->
-	<script src="js/arrive.min.js"></script>
+	<script src="js/library/arrive.min.js"></script>
+
+
+	<script src='js/library/angular.js'></script>
+	<!--Angular dependencies-->
+	<script src='js/library/angular-route.js'></script>
+	<script src="/js/library/ui-grid-unstable.js"></script>
+	<script src='js/library/ui-bootstrap-tpls-0.12.0.min.js'></script>
+
+	<!-- Main controller files -->
+	<script src='js/appController.js'></script>
+	<!--Controller files-->
+	<script src='js/controller/pdfcontroller.js'></script>
+	<script src='js/controller/pdfOpenController.js'></script>
+	<script src='js/controller/resultController.js'></script>
+	<script src='js/controller/productionController.js'></script>
+
 
 </head>
 <body ><div class="container" style="">
