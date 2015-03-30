@@ -9,13 +9,14 @@
 	<link rel="styleSheet" href="css/ui-grid-unstable.css"/>
 
 	<!-- SPELLS -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.0.7/jquery.browser.min.js"></script><!-- Needed to use $.browser-->
+	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+	<script src='js/library/jquery-2.1.0.min.js'></script>
+	 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.0.7/jquery.browser.min.js"></script> <!--Needed to use $.browser -->
 	<script src='js/library/jcanvas.min.js'></script> <!--Jcanvas for our select tool in the canvas via jquery -->
 	<script type="text/javascript" src="js/library/jquery.jscrollpane.min.js"></script>	<!-- the jScrollPane script for pretty scrolls -->
 	<script type="text/javascript" src="js/library/jquery.mousewheel.js"></script>	<!-- the jScrollPane script for pretty scrolls -->
 	<!--instantiate after some browser sniffing to rule out webkit browsers-->
-	<script type="text/javascript">
+	<!--<script type="text/javascript">
 		$(document).ready(function () {if (!$.browser.webkit) {	$('.container').jScrollPane();}	});
 	</script>
 	<!-- Other important js -->
@@ -37,7 +38,7 @@
 	<script src='js/controller/pdfcontroller.js'></script>
 	<script src='js/controller/pdfOpenController.js'></script>
 	<script src='js/controller/resultController.js'></script>
-	<script src='js/controller/productionController.js'></script>
+	<script src='js/controller/rulesController.js'></script>
 
 
 </head>
@@ -103,7 +104,7 @@
 		<!-- Results and Scripts-->
 		<div class="col-md-4">
 
-			<div class="row" ng-include="'partials/productionsContainer.html'" ng-controller="productionController">
+			<div class="row" ng-include="'partials/rulesContainer.html'" ng-controller="productionController">
 
 			</div>
 

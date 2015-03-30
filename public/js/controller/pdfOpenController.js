@@ -69,56 +69,48 @@ app.controller('pdfOpenController', [ '$scope', '$http', function($scope, $http)
 
 //CANVAS
 function initCanvas(canvas_id){
-    var flag = false,
-        prevX = 0,
-        currX = 0,
-        prevY = 0,
-        currY = 0,
-        dot_flag = false;
+    var mouseIsDown=false;
+    var startX;
+    var startY;
     var strokeStyle = "black", lineWidth = 14;
 
-    //set the drawing functionalities
+    //Set the drawing functionalities
     var canvas = $('#'+canvas_id).get(0);
     var ctx = $('#'+canvas_id).get(0).getContext('2d');
 
-
-    $('#'+canvas_id).mousemove(function(e){
-        if (flag) {
-            prevX = currX;
-            prevY = currY;
-            currX = e.clientX - canvas.offsetLeft;
-            currY = e.clientY - canvas.offsetTop;
-            draw(ctx, prevX, prevY, currX, currY, strokeStyle, lineWidth);
-        }
-    });
-
     $('#'+canvas_id).mousedown(function(e){
-        prevX = currX;
-        prevY = currY;
-        currX = e.clientX - canvas.offsetLeft;
-        currY = e.clientY - canvas.offsetTop;
+        var mouseClickX = e.pageX;//e.clientX;
+        var mouseClickY = e.pageY;//e.clientY;
 
-        flag = true;
-        dot_flag = true;
-        if (dot_flag) {
-            ctx.beginPath();
-            ctx.fillStyle = strokeStyle;
-            ctx.fillRect(currX, currY, 2, 2);
-            ctx.closePath();
-            dot_flag = false;
-        }
+        console.log("Mouse click on: "+ mouseClickX +", "+mouseClickY);
+
+        mouseIsDown = true;
+        startX = mouseClickX - canvas.offsetLeft;
+        startY = mouseClickY - canvas.offsetTop;
+        canvas.style.cursor = "crosshair";
+
+        console.log("Translated with canvs offset: "+ startX +", "+startY);
+
     });
 
-    $('#'+canvas_id).mouseup(function(){
-        flag = false;
-    });
+    $('#'+canvas_id).mouseup(function(e){
+        var mouseClickX = e.pageX;//e.clientX;
+        var mouseClickY = e.pageY;//e.clientY;
 
-    $('#'+canvas_id).mouseout(function(){
-        flag = false;
-    });
+        console.log("Mouse click on: "+ mouseClickX +", "+mouseClickY);
 
+        mouseIsDown=false;
+        ctx.beginPath();
+        ctx.rect(startX, startY, mouseClickX - startX, mouseClickY - startY);
+        ctx.fill();
+        canvas.style.cursor="default";
+
+        //console.log("Translated with canvas offset: "+ startX +", "+startY);
+
+    });
 
 }
+/*
 function draw(ctx, prevX, prevY, currX, currY, strokeStyle, lineWidth) {
     ctx.beginPath();
     ctx.moveTo(prevX, prevY);
@@ -127,4 +119,4 @@ function draw(ctx, prevX, prevY, currX, currY, strokeStyle, lineWidth) {
     ctx.lineWidth = lineWidth;
     ctx.stroke();
     ctx.closePath();
-}
+}*/

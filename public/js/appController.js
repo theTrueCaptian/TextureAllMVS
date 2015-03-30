@@ -14,26 +14,26 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 app.controller('toolboxController', function($scope){
     //Indicates the mode in which the user is in.
-    $scope.selectOn = false;
-    $scope.annotate = false;
+    $scope.selectOn         = false;
+    $scope.annotate         = false;
 
     $scope.setAllButtonsOff = function (){
-        $scope.selectOn = false;
-        $scope.annotate = false;
+        $scope.selectOn     = false;
+        $scope.annotate     = false;
     };
 
-    $scope.toggleSelectOn = function (){
-        $scope.selectOn = !$scope.selectOn;
+    $scope.toggleSelectOn   = function (){
+        $scope.selectOn     = !$scope.selectOn;
         $scope.drawRectangle();
-        console.log("Select on; the rectable should draw")
+        console.log( "Select on; the rectable should draw" );
 
     };
 
-    $scope.toggleAnnotate = function (){
-        $scope.annotate = !$scope.annotate;
+    $scope.toggleAnnotate   = function (){
+        $scope.annotate     = !$scope.annotate;
     };
 
-    $scope.drawRectangle = function (){
+    $scope.drawRectangle    = function (){
         // Draw a circle
         /*$("canvas").drawArc({
             draggable: true,
@@ -43,7 +43,7 @@ app.controller('toolboxController', function($scope){
         });*/
     }
 
-    $scope.crop = function (){
+    $scope.crop             = function (){
         console.log('Crop!');
     };
 

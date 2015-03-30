@@ -1,0 +1,117 @@
+<!-- Decorative tags: http://mbenford.github.io/ngTagsInput/demos.html -->
+
+<!--<script type="text/template" id="header_template">
+    <div class="ui-grid-top-panel" style="text-align: center">I am a Custom Grid Header</div>
+</script>-->
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Extraction Rules</h3>
+    </div>
+
+    <div class="panel-body" >
+       <!-- <div  ui-grid="gridOptions" class="extractionRulesTable" ui-grid-resize-columns ui-grid-edit >
+
+        </div>-->
+        <style type="text/css">
+            .from{
+
+                color: #2e90a0;
+
+            }
+            .within, .after {
+                color: #2a1cff;
+            }
+            .operator {
+                color: #a00b4e;
+            }
+            .regex {
+                color: #e8dc3a;
+            }
+            .extractionRulesTable, .extractionRulesTable tr{
+                border: 1px solid #000000;
+            }
+            .extractionPhrase{
+                color: #15e831;
+            }
+            .extractionRulesTable td{
+                padding: 3px;
+            }
+            .box{
+                color: #e82870;
+            }
+            .labels{
+                color: #520b0d;
+            }
+        </style>
+
+        <table style="font-family: Consolas; /*background-color:#e6f5d0*/" class="extractionRulesTable">
+            <tr>
+                <td> <!--bgcolor="#c51b7d"-->
+                   <span class="labels"> Name</span> <span class="operator">:=</span> <span class="regex">/[A-Z][a-z]+\s*[A-Z][a-z]+/g </span><br>
+                   &emsp;&emsp;&emsp;&emsp;        <span class="from">from</span> <span class="box">Line #1</span> <br>
+                   &emsp;&emsp;&emsp;&emsp;        <span class="within">within</span><span class="box"> Page 1 </span><br>
+
+                </td>
+            </tr>
+            <tr>
+                <td> <!--bgcolor="#e9a3c9"-->
+                   <span class="labels"> Phone</span> <span class="operator">:=</span> <span class="regex">/(\(\d+\)\d+-\d+|\d{3}[\s-]\d{3}[\s-]\d{4})/ </span><br>
+                   &emsp;&emsp;&emsp;&emsp;       <span class="from">from</span><span class="box"> Line</span> <br>
+                   &emsp;&emsp;&emsp;&emsp;       <span class="after">after</span> <span class="box">Heading #1 </span><br>
+
+                </td>
+            </tr>
+            <tr>
+                <td> <!--bgcolor="#fde0ef"-->
+                   <span class="labels"> School</span> <span class="operator">:=</span> <span class="regex">/,([A-Za-z\s]+University[A-Za-z\s]+),/g</span><br>
+                   &emsp;&emsp;&emsp;&emsp;            <span class="from">from</span> <span class="box">Section</span> <br>
+                </td>
+            </tr>
+            <tr>
+                <td> <!--bgcolor="#e6f5d0"-->
+                   <span class="labels"> Year </span><span class="operator">:=</span> <span class="regex">/\d\d\d\d/</span><br>
+                   &emsp;&emsp;&emsp;&emsp;       <span class="within">within</span> <span class="labels">School</span> <br>
+                    <span class="operator">OR</span><br>
+                   <span class="labels"> Year </span><span class="operator">:=</span> <span class="regex">/\d\d\d\d[A-Za-z\s\.]*-[A-Za-z\s\.]*\d\d\d\d/</span><br>
+                   &emsp;&emsp;&emsp;&emsp;        <span class="within">within</span> <span class="labels"> School</span> <br>
+                </td>
+            </tr>
+            <tr>
+                <td> <!--bgcolor="#a1d76a"-->
+                   <span class="labels"> Education</span> <span class="operator">:=</span> <span class="extractionPhrase">Permute</span> ( <span class="labels">School</span>, <span class="labels">Year</span> )<br>
+                   &emsp;&emsp;&emsp;&emsp;            <span class="from">from</span> <span class="box">Section </span><br>
+                   &emsp;&emsp;&emsp;&emsp;           <span class="within">within</span> <span class="box">Page 1</span><br>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <!--<div class="panel-body">
+        <textarea rows="4" cols="50">
+                Author <span class="equal">:=</span> /[A-Z][a-z]+\s*[A-Z][a-z]+/g
+                        <span class="from">from</span> Line
+                        <span class="after">after</span> Heading #1
+        </textarea>
+        <table class='rules_table' >
+            <tr ng-repeat="a_rule in rules" style='width:inherit'>
+                <td >
+                    <tags-input class='decorate_tag' ng-model="a_rule" placeholder="Edit"></tags-input>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default" ng-click="rules.remove($index)">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <button type="button" class="btn btn-default" >Add Rule
+            <span class="glyphicon glyphicon-plus" aria-hidden="true" ></span>
+        </button>
+    </div>-->
+</div>
+
+<style>
+
+</style>

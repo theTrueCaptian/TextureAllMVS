@@ -7,8 +7,10 @@ var path_to_pdf_dir = 'public/pdf/';
 var path_to_pdf_img_dir = 'public/pdf/img/';
 var client_path_img_dir = 'pdf/img/'
 var img_ext = 'png';
-var im = require('imagemagick');
+//var im = require('imagemagick');
 var fs = require('fs');
+var imagemagick     = require('./image_processing/imageutils.js');
+
 
 //Feb 26, Problem: imagemagick doesn't render the text on certian pdfs.
 
@@ -18,56 +20,36 @@ var fs = require('fs');
 exports.pdf2html = function (filename, callback){
     /* preferred options for best quality see http://stackoverflow.com/questions/6605006/convert-pdf-to-image-with-high-resolution
      */
-    im.convert(/*['-verbose',
-                '-density',
-                '150',
-                '-trim',
-                path_to_pdf_dir+filename,
-                '-quality',
-                '100',
-                '-sharpen',
-                '0x1.0',
-                path_to_pdf_img_dir+filename+'.'+img_ext]*/
-            ['-verbose',        //Solving the issue of dark images converted     http://stackoverflow.com/questions/10934456/imagemagick-pdf-to-jpgs-sometimes-results-in-black-background
-                '-density',
-                '150',
-                '-colorspace',
-                'sRGB',
-                path_to_pdf_dir+filename,
-                '-resize',
-                '50%',
-                '-quality',
-                '95',
-                path_to_pdf_img_dir+filename+'.'+img_ext],
-        function(err, stdout){
-            if (err){
-                console.log(err);
-                callback(err);
-            }else {
-                console.log('stdout:', stdout);
+    imagemagick.pdf2image(path_to_pdf_dir+filename, path_to_pdf_img_dir+filename+'.'+img_ext).then( function(stdout){
 
-                //Get all filenames from the pdf's image results:
-                var allFiles = getAllFileNamesFromDir(path_to_pdf_img_dir);
+        //Get all filenames from the pdf's image results:
+        var allFiles = getAllFileNamesFromDir(path_to_pdf_img_dir);
 
-                //Filter out for the file names that have the same prefix names followed by a dash and number
-                //or sometimes it is just followed by  the extension (in the case of .png)
-                //and add them to pdfImgFiles[]
-                var pdfImgFiles = [];
-                allFiles.forEach(function(elem){
-                    var regex = new RegExp("\\b("+filename+")\\b-\\d+\\."+img_ext);
-                    var regex2 = new RegExp("\\b("+filename+")\\b\\."+img_ext);
+        //Filter out for the file names that have the same prefix names followed by a dash and number
+        //or sometimes it is just followed by  the extension (in the case of .png)
+        //and add them to pdfImgFiles[]
+        var pdfImgFiles = [];
+        var arr_promises        = []; 
 
-                    //Check for a match
-                    if(regex.test(elem) || regex2.test(elem)){
-                       pdfImgFiles.push(client_path_img_dir +elem);
-                    }
-                });
+        allFiles.forEach(function(elem){
+            var regex = new RegExp("\\b("+filename+")\\b-\\d+\\."+img_ext);
+            var regex2 = new RegExp("\\b("+filename+")\\b\\."+img_ext);
 
+            //Check for a match
+            if(regex.test(elem) || regex2.test(elem)){
+               pdfImgFiles.push(client_path_img_dir +elem);
+               arr_promises.push( imagemagick.transparency2white(path_to_pdf_img_dir+elem, path_to_pdf_img_dir+elem)  );
 
-                callback(pdfImgFiles);
             }
-        }
-    );
+        });
+
+
+        //Convert transparency to white
+        var Q                   = require('Q');
+        
+        Q.all(arr_promises).then(callback(pdfImgFiles));
+    });
+   
 }
 
 //The conversion from pdf's image into meta-data
