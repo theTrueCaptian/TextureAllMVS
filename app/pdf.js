@@ -20,6 +20,7 @@ var imagemagick     = require('./image_processing/imageutils.js');
 exports.pdf2html = function (filename, callback){
     /* preferred options for best quality see http://stackoverflow.com/questions/6605006/convert-pdf-to-image-with-high-resolution
      */
+    // callback([client_path_img_dir+'obama.pdf.png'])  // This line for screenshot purposes; Will show obama's
     imagemagick.pdf2image(path_to_pdf_dir+filename, path_to_pdf_img_dir+filename+'.'+img_ext).then( function(stdout){
 
         //Get all filenames from the pdf's image results:

@@ -10,6 +10,26 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 }]);
 
+app.factory('learningService', function ($rootScope) {
+    var learningCommunication = {
+        isLearning : false,
+        beginLearning: function(){
+            this.isLearning = true;
+            console.log("beginnning learning:"+this.isLearning)
+            // Toggle the show for rules to be showned
+            $rootScope.$emit('BeginLearning');
+
+            //$rootScope.toggleShowSuggestedRules();
+        },
+        endLearning: function(){
+            this.isLearning = false;
+            console.log("end learning")
+
+        }
+    };
+
+    return learningCommunication;
+});
 
 
 app.controller('toolboxController', function($scope){
@@ -34,13 +54,7 @@ app.controller('toolboxController', function($scope){
     };
 
     $scope.drawRectangle    = function (){
-        // Draw a circle
-        /*$("canvas").drawArc({
-            draggable: true,
-            fillStyle: "green",
-            x: 100, y: 100,
-            radius: 50
-        });*/
+
     }
 
     $scope.crop             = function (){

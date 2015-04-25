@@ -6,9 +6,52 @@
 
 // Controls resultsContainer.html
 // Load in data into the results table
-app.controller('resultController', function($scope, $http){
-                                                                                // This contains a list of unique labels e.g. Name, Address, etc
+app.controller('resultController', [ '$scope', '$http', 'learningService', function($scope, $http, learningService){
+    $scope.learningService = learningService;
+
     $scope.labels_list = [
+        { field: 'DocumentName',    enableCellEdit: true },
+        { field: 'School',          enableCellEdit: true }
+    ];
+
+    $scope.extraction_results = [                                               // The hardcode data into the table
+        {
+            "DocumentName"      : "AdeleJenkins.pdf",
+            "School"            : "Connecticut University, Central University"
+        },{
+            "DocumentName"      : "AyshaSiddique.pdf",
+            "School"            : "Carnegie Mellon University"
+        },{
+            "DocumentName"      : "JuanBeltran.pdf",
+            "School"            : "New York University"
+        },{
+            "DocumentName"      : "AzzaAbouzied.pdf",
+            "School"            : "Yale University"
+        },{
+            "DocumentName"      : "JayChen.pdf",
+            "School"            : "Southern Connecticut State University"
+        },{
+            "DocumentName"      : "AyshaHanafi.pdf",
+            "School"            : "Central Connecticut State University"
+        },{
+            "DocumentName"      : "IdrisAdam.pdf",
+            "School"            : "University of Connecticut"
+        },{
+            "DocumentName"      : "LoriManson.pdf",
+            "School"            : "Western Connecticut State Univ."
+        },{
+            "DocumentName"      : "ZaynKhan.pdf",
+            "School"            : "Eastern Connecticut State Univ."
+        },{
+            "DocumentName"      : "MalikAbdul.pdf",
+            "School"            : "Wayne State University"
+        }
+    ];
+
+
+                                                                                // This contains a list of unique labels e.g. Name, Address, etc
+
+    /*$scope.labels_list = [
                             { field: 'Name',    enableCellEdit: true },
                             { field: 'Phone',   enableCellEdit: true },
                             { field: 'School',  enableCellEdit: true }
@@ -16,9 +59,9 @@ app.controller('resultController', function($scope, $http){
 
     $scope.extraction_results = [                                               // The hardcode data into the table
         {
-            "Name"      : "Maeda Hanafi",
+            "Name"      : "Adele Jenkins",
             "Phone"     : "(203)-444-9268",
-            "School"    : "Connecticut University"
+            "School"    : "Connecticut University, Central University"
         },{
             "Name"      : "Aysha Siddique",
             "Phone"     : "(712)-628-4039",
@@ -56,7 +99,7 @@ app.controller('resultController', function($scope, $http){
             "Phone"     : "(232)-543-1344",
             "School"    : "Wayne State University"
         }
-    ];
+    ];*/
 
     $scope.gridOptions  = {                                                     // Load data and options into the table
         enableSorting   :  true,
@@ -117,4 +160,4 @@ app.controller('resultController', function($scope, $http){
     $scope.closeAlert   = function(index) {
         $scope.alerts.splice(index, 1);
     };
-});
+}]);

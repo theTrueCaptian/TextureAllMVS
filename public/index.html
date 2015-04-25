@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css" />
 	<link rel="stylesheet" type="text/css" href="css/productionContainer.css" />
 	<link rel="styleSheet" href="css/ui-grid-unstable.css"/>
+    <link href="css/opentip.css" rel="stylesheet" type="text/css" />    <!-- fancy tooktips: opentips-->
 
 	<!-- SPELLS -->
 	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
@@ -14,11 +15,13 @@
 	 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.0.7/jquery.browser.min.js"></script> <!--Needed to use $.browser -->
 	<script src='js/library/jcanvas.min.js'></script> <!--Jcanvas for our select tool in the canvas via jquery -->
 	<script type="text/javascript" src="js/library/jquery.jscrollpane.min.js"></script>	<!-- the jScrollPane script for pretty scrolls -->
-	<script type="text/javascript" src="js/library/jquery.mousewheel.js"></script>	<!-- the jScrollPane script for pretty scrolls -->
+    <script src="js/library/opentip-jquery.min.js"></script> <!-- fancy tooktips: opentips-->
+    <script type="text/javascript" src="js/library/jquery.mousewheel.js"></script>	<!-- the jScrollPane script for pretty scrolls -->
 	<!--instantiate after some browser sniffing to rule out webkit browsers-->
 	<!--<script type="text/javascript">
 		$(document).ready(function () {if (!$.browser.webkit) {	$('.container').jScrollPane();}	});
 	</script>
+
 	<!-- Other important js -->
 	<script src="js/library/lodash.js"></script>
 	<script src="js/utils.js"></script>
@@ -42,29 +45,29 @@
 
 
 </head>
-<body ><div class="container" style="">
+<body ><div class="container" style="" >
 	<!--<img src="imgs/texturelogo.png">-->
 	<h3>Texture</h3>
 	<div class="row">
 
-		<div class="col-md-8" >
+		<div class="col-md-7" >
 
 			<!-- PDF list -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<!--Header of the PDF panel -->
 					<table style='width:100%'><tr>
-						<td>
-							<h3>List of resumes</h3>
+						<td style="width:20%;">
+							<h4>List of resumes</h4>
 						</td>
 						<td>
 							<div id="toolbox" ng-include="'partials/toolbox.html'"></div>
 						</td>
 
-					</tr><tr>
+
 						<td align="right">
-							<div class="col-sm-10">
-								<div class="input-group " aria-label="Right Align">
+							<div class="col-sm-10" style="float:right">
+								<div class="input-group " aria-label="Right Align" >
 									<span class="input-group-addon" id="basic-addon1">
 										<span class="glyphicon glyphicon-search"  ></span>
 									</span>
@@ -83,7 +86,14 @@
 							<td >
 								<div class="pdfTableRow">
 									<a  ng-click="currentTpl='partials/pdfContainer.html'; showPDF=!showPDF; loadpdf( pdf_file.filename);" type="button" class="btn btn-default" style='width:100%' >
-										{{pdf_file.filename}}
+                                            <div style="text-align: left;" ng-show="!showPDF">
+                                                <span class="glyphicon glyphicon-chevron-right" ></span>
+                                                {{pdf_file.filename}}
+                                            </div>
+                                            <div style="text-align: left;" ng-show="showPDF">
+                                                <span class="glyphicon glyphicon-chevron-down" ></span>
+                                                {{pdf_file.filename}}
+                                            </div>
 									</a>
 									<div id="pdfContent" ng-include="currentTpl"></div>
 								</div>
@@ -102,7 +112,7 @@
 		</div>
 
 		<!-- Results and Scripts-->
-		<div class="col-md-4">
+		<div class="col-md-5">
 
 			<div class="row" ng-include="'partials/rulesContainer.html'" ng-controller="productionController">
 
