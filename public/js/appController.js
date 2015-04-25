@@ -13,17 +13,35 @@ app.config(['$routeProvider', function ($routeProvider) {
 app.factory('learningService', function ($rootScope) {
     var learningCommunication = {
         isLearning : false,
-        beginLearning: function(){
+        endLearning: function(){
+
+            this.isLearning = false;
+            $rootScope.$emit('EndLearning');
+
+        }, beginLearning: function(){
+
             this.isLearning = true;
-            console.log("beginnning learning:"+this.isLearning)
             // Toggle the show for rules to be showned
             $rootScope.$emit('BeginLearning');
+            // After supposedly learning, toggle the boolean
+            setTimeout(function (){
+                this.isLearning = false;
+                $rootScope.$emit('EndLearning');
+            }, 5000);
 
-            //$rootScope.toggleShowSuggestedRules();
         },
-        endLearning: function(){
-            this.isLearning = false;
-            console.log("end learning")
+        isRuleRunning : false,
+        run_rule : function(){
+            this.isRuleRunning = true;
+            console.log("beginning running rule")
+            // Emit an event signifying the rule is being applied
+            $rootScope.$emit('BeginRunning');
+            // After supposedly running, toggle the boolean
+            setTimeout(function (){
+                console.log("ending running rule")
+                this.isRuleRunning = false;
+                $rootScope.$emit('EndRunning');
+            }, 5000);
 
         }
     };

@@ -6,8 +6,23 @@
 
 // Controls resultsContainer.html
 // Load in data into the results table
-app.controller('resultController', [ '$scope', '$http', 'learningService', function($scope, $http, learningService){
+app.controller('resultController', [ '$scope', '$http', '$rootScope', 'learningService', function($scope, $http, $rootScope, learningService){
     $scope.learningService = learningService;
+
+    // Detects event from the service that evokes learning
+    $rootScope.$on('BeginRunning', function(event, args) {
+        //$scope.$apply(function(){
+            $scope.showResults      = false;
+            $scope.showLoadResults  = true;
+        //});
+    });
+
+    $rootScope.$on('EndRunning', function(event, args) {
+        $scope.$apply(function(){
+            $scope.showResults      = true;
+            $scope.showLoadResults  = false;
+        });
+    });
 
     $scope.labels_list = [
         { field: 'DocumentName',    enableCellEdit: true },
@@ -15,6 +30,42 @@ app.controller('resultController', [ '$scope', '$http', 'learningService', funct
     ];
 
     $scope.extraction_results = [                                               // The hardcode data into the table
+        {
+            "DocumentName"      : "obama.pdf",
+            "School"            : "HARVARD LAW SCHOOL, COLUMBIA UNIVERSITY"
+        },{
+            "DocumentName"      : "adelejenkins.pdf",
+            "School"            : "Connecticut University, Central University"
+        },{
+            "DocumentName"      : "AyshaSiddique.pdf",
+            "School"            : "Carnegie Mellon University"
+        },{
+            "DocumentName"      : "JuanBeltran.pdf",
+            "School"            : "New York University"
+        },{
+            "DocumentName"      : "AzzaAbouzied.pdf",
+            "School"            : "Yale University"
+        },{
+            "DocumentName"      : "JayChen.pdf",
+            "School"            : "Southern Connecticut State University"
+        },{
+            "DocumentName"      : "AyshaHanafi.pdf",
+            "School"            : "Central Connecticut State University"
+        },{
+            "DocumentName"      : "IdrisAdam.pdf",
+            "School"            : "University of Connecticut"
+        },{
+            "DocumentName"      : "LoriManson.pdf",
+            "School"            : "Western Connecticut State Univ."
+        },{
+            "DocumentName"      : "ZaynKhan.pdf",
+            "School"            : "Eastern Connecticut State Univ."
+        },{
+            "DocumentName"      : "MalikAbdul.pdf",
+            "School"            : "Wayne State University"
+        }
+    ];
+    /*$scope.extraction_results = [                                               // The hardcode data into the table
         {
             "DocumentName"      : "AdeleJenkins.pdf",
             "School"            : "Connecticut University, Central University"
