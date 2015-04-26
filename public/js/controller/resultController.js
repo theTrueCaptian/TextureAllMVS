@@ -35,10 +35,16 @@ app.controller('resultController', [ '$scope', '$http', '$rootScope', 'learningS
             "School"            : "HARVARD LAW SCHOOL, COLUMBIA UNIVERSITY"
         },{
             "DocumentName"      : "adelejenkins.pdf",
-            "School"            : "Connecticut University, Central University"
+            "School"            : "THE UNIVERSITY OF COLARADO"
         },{
-            "DocumentName"      : "AyshaSiddique.pdf",
-            "School"            : "Carnegie Mellon University"
+            "DocumentName"      : "MaedaHanafiResume2014.pdf",
+            "School"            : "Southern Connecticut State University"
+        },{
+            "DocumentName"      : "jacob.pdf",
+            "School"            : "North Edhington College Workforce Training Center"
+        },{
+            "DocumentName"      : "robertnorberg.pdf",
+            "School"            : "Wayne State University"
         },{
             "DocumentName"      : "JuanBeltran.pdf",
             "School"            : "New York University"
